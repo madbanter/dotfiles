@@ -48,7 +48,9 @@ alias vi='mvim -v'
 
 alias ls='ls -GFh'
 
-alias rip='youtube-dl -o "/users/$me/Downloads/%(title)s.%(ext)s" -f bestaudio[ext=m4a] $1 --prefer-ffmpeg --embed-thumbnail --metadata-from-title "%(artist)s - %(title)s" --add-metadata'
+alias ogrip='youtube-dl -o "/users/$me/Downloads/%(title)s.%(ext)s" -f bestaudio[ext=m4a] $1 --prefer-ffmpeg --embed-thumbnail --metadata-from-title "%(artist)s - %(title)s" --add-metadata'
+
+alias rip='yt-dlp -o "/users/$me/Downloads/%(title)s.%(ext)s" -f bestaudio[ext=m4a] $1 --prefer-ffmpeg --embed-thumbnail --metadata-from-title "%(artist)s - %(title)s" --add-metadata'
 
 alias saferip='youtube-dl -o "/users/$me/Downloads/%(title)s.%(ext)s" -f bestaudio[ext=m4a] $1 --prefer-ffmpeg --embed-thumbnail'
 
