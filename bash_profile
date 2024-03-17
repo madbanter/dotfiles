@@ -42,10 +42,6 @@ alias getnumbers='python3 /Users/$me/Documents/Python/Scripts/get_numbers_clipbo
 
 alias getnames='python3 /Users/$me/Documents/Python/Scripts/get_names_clipboard.py'
 
-alias vim='mvim -v'
-
-alias vi='mvim -v'
-
 alias ls='ls -GFh'
 
 alias ogrip='youtube-dl -o "/users/$me/Downloads/%(title)s.%(ext)s" -f bestaudio[ext=m4a] $1 --prefer-ffmpeg --embed-thumbnail --metadata-from-title "%(artist)s - %(title)s" --add-metadata'
