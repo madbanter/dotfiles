@@ -118,3 +118,44 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Functions:
+
+rewrap() { filename="$@" ; namestem="$(basename "$filename" | sed 's/\(.*\)\..*/\1/')" ; ffmpeg -hide_banner -hwaccel auto -i "$filename" -c copy -movflags +faststart "$namestem"_rewrap.mov ; }
+
+pix720() { filename="$@" ; namestem="$(basename "$filename" | sed 's/\(.*\)\..*/\1/')" ; ffmpeg -hide_banner -hwaccel auto -i "$filename" -vcodec libx264 -profile:v high -preset medium -b:v 2400000 -vf "scale='min(iw,1280)':-1" -acodec aac -g 6 -pix_fmt yuv420p -movflags +faststart "$namestem"_720.mov ; }
+
+pix1080() { filename="$@" ; namestem="$(basename "$filename" | sed 's/\(.*\)\..*/\1/')" ; ffmpeg -hide_banner -hwaccel auto -i "$filename" -vcodec libx264 -profile:v high -preset medium -b:v 8000000 -vf "scale='min(iw,1920)':-1" -acodec aac -g 6 -pix_fmt yuv420p -movflags +faststart "$namestem"_1080.mov ; }
+
+flac2mp3() { filename="$@" ; namestem="$(basename "$filename" | sed 's/\(.*\)\..*/\1/')" ; ffmpeg -hide_banner -i "$filename" -ab 320k -map_metadata 0 -id3v2_version 3 "$namestem.mp3" ; }
+
+flac2mp3dir() { cd "$@" ; for input in *.flac ; do flac2mp3 "$input" ; done }
+
+cd() { builtin cd "$@"; ls; }
+
+#   cdf:  'Cd's to frontmost window of MacOS Finder
+#   ------------------------------------------------------
+    cdf () {
+        currFolderPath=$( /usr/bin/osascript <<EOT
+            tell application "Finder"
+                try
+            set currFolder to (folder of the front window as alias)
+                on error
+            set currFolder to (path to desktop folder as alias)
+                end try
+                POSIX path of currFolder
+            end tell
+EOT
+        )
+        echo "cd $currFolderPath"
+        cd "$currFolderPath"
+    }
+
+#   jt: 'Cd's to item's parent directory
+#   ------------------------------------------------------
+jt() { cd "$(dirname "$@")" ; }
+
+#   jtt: jt's to last argument from previous command
+#   ------------------------------------------------------
+jtt() { jt "$_" ; }
+
